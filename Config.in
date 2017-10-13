@@ -1,0 +1,1 @@
+source "$BR2_EXTERNAL_GARIMPO_PATH/package/cpuminer-multi/Config.in"

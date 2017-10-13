@@ -1,0 +1,7 @@
+{
+  "url" : "stratum+tcp://yiimp.ccminer.org:4252",
+  "user" : "benchmark",
+  "pass" : "d=0.024",
+
+  "algo" : "decred"
+}

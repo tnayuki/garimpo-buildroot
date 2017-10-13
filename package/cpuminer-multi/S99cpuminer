@@ -1,0 +1,38 @@
+#!/bin/sh
+
+start() {
+        printf "Starting cpuminer daemon: "
+        start-stop-daemon -S -q -p /var/run/cpuminer.pid -m \
+                --startas /bin/sh -- -c "exec /usr/bin/cpuminer -B --config /etc/cpuminer.json >> /var/log/cpuminer.log 2>&1"
+        [ $? = 0 ] && echo "OK" || echo "FAIL"
+}
+
+stop() {
+        printf "Stopping cpuminer daemon: "
+        start-stop-daemon -K -q -p /var/run/cpuminer.pid \
+                -x /usr/local/bin/cpuminer
+        [ $? = 0 ] && echo "OK" || echo "FAIL"
+}
+
+restart() {
+        stop
+        sleep 1
+        start
+}
+
+case "$1" in
+        start)
+                start
+                ;;
+        stop)
+                stop
+                ;;
+        restart|reload)
+                restart
+                ;;
+        *)
+                echo "Usage: $0 {start|stop|restart}"
+                exit 1
+esac
+
+exit $?
