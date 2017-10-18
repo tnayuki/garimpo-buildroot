@@ -72,7 +72,7 @@ Vagrant.configure("2") do |config|
     sudo -u ubuntu mkdir -p /home/ubuntu/buildroot
     cd /home/ubuntu/buildroot
 
-    curl -s https://buildroot.org/downloads/buildroot-2017.02.6.tar.gz | sudo -u ubuntu tar xz --strip-components=1
+    curl -s https://buildroot.org/downloads/buildroot-2017.08.tar.gz | sudo -u ubuntu tar xz --strip-components=1
 
     sudo -u ubuntu make BR2_EXTERNAL=/vagrant garimpo_raspberrypi0_defconfig
   SHELL
