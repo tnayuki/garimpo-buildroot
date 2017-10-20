@@ -1,14 +1,14 @@
 #!/bin/sh
 
 start() {
-        printf "Loading modules: "
-        modprobe -a brcmfmac brcmutil i2c-bcm2835 i2c-dev
+        printf "Staring LCD updating daemon: "
+        start-stop-daemon -S -q -p /var/run/update-lcd.pid -m --background -x /usr/local/bin/update-lcd
         [ $? = 0 ] && echo "OK" || echo "FAIL"
 }
 
 stop() {
-        printf "Unloading modules: "
-        rmmod brcmfmac brcmutil i2c-bcm2835 i2c-dev
+        printf "Stopping LCD updating daemon: "
+        start-stop-daemon -K -q -p /var/run/update-lcd.pid -x /usr/local/bin/update-lcd
         [ $? = 0 ] && echo "OK" || echo "FAIL"
 }
 

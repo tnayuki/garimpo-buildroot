@@ -1,0 +1,26 @@
+#!/bin/sh
+
+start() {
+        printf "Initializing LCD: "
+        i2cset -y 1 0x3e 0 0x38 0x39 0x14 0x78 0x5e 0x6c i && \
+        sleep 0.25 && \
+        i2cset -y 1 0x3e 0 0x0c 0x01 0x06 i && \
+        sleep 0.05 && \
+        i2cset -y 1 0x3e 0x40 66 111 111 116 105 110 103 i
+        [ $? = 0 ] && echo "OK" || echo "FAIL"
+}
+
+case "$1" in
+        start)
+                start
+                ;;
+        stop)
+                ;;
+        restart)
+                ;;
+        *)
+                echo "Usage: $0 {start|stop|restart}"
+                exit 1
+esac
+
+exit $?

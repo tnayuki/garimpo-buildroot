@@ -1,0 +1,39 @@
+#!/usr/bin/python
+
+import json
+import re
+import smbus
+import ssl
+import time
+import urllib.request
+
+ssl._create_default_https_context = ssl._create_unverified_context
+
+i2c = smbus.SMBus(1)
+
+def display_lcd(pos, text):
+    global i2c
+
+    i2c.write_byte_data(0x3e, 0x00, 0x80 + pos)
+    i2c.write_i2c_block_data(0x3e, 0x40, list(map(ord, text)))
+
+while True:
+    try:
+        response = urllib.request.urlopen("https://vippool.net/index.php?page=api&action=getuserbalance&api_key=54a7572188e46596c3cfc0eaeba22588863ad7c1a564f769a9c9d67c6c67a306")
+        balance = json.loads(response.read().decode('utf8'))
+
+        display_lcd(0, str((float(balance['getuserbalance']['data']['confirmed']) + float(balance['getuserbalance']['data']['unconfirmed'])) * 1000))
+
+        hash_rate = None
+        for line in open('/var/log/cpuminer.log', 'r') :
+            m = re.search('^.*: ([0-9\\.]+) ([a-z]H/s).*$', line.rstrip())
+            if m:
+                hash_rate = m.group(1) + m.group(2)
+
+        if (hash_rate) :
+            display_lcd(40, hash_rate)
+
+    except:
+        pass
+
+    time.sleep(60)
