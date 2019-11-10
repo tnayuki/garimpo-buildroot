@@ -1,6 +1,5 @@
 auto lo
 iface lo inet loopback
 
-auto wwan0
-iface wwan0 inet ppp
-    provider soracom_ak-020
+auto wlan0
+iface wlan0 inet dhcp

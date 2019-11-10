@@ -2,13 +2,13 @@
 
 start() {
         printf "Loading modules: "
-        modprobe -a brcmfmac brcmutil i2c-bcm2835 i2c-dev ppp_generic
+        modprobe -a brcmfmac brcmutil i2c-bcm2835 i2c-dev
         [ $? = 0 ] && echo "OK" || echo "FAIL"
 }
 
 stop() {
         printf "Unloading modules: "
-        rmmod brcmfmac brcmutil i2c-bcm2835 i2c-dev ppp_generic
+        rmmod brcmfmac brcmutil i2c-bcm2835 i2c-dev
         [ $? = 0 ] && echo "OK" || echo "FAIL"
 }
 
